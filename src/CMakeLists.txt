@@ -30,19 +30,16 @@ target_include_directories(cribvme
 )
 target_include_directories(cribvme
     PRIVATE ${PROJECT_SOURCE_DIR}/include
-    #PRIVATE ${PROJECT_SOURCE_DIR}/include/module
 )
+target_link_libraries(cribvme -lCAENVME)
 install(TARGETS cribvme
-    INCLUDES DESTINATION include
-    ARCHIVE DESTINATION lib
-    PUBLIC_HEADER DESTINATION include/cribabies
     LIBRARY DESTINATION lib
 )
 
 # cmdvme
 add_executable(cmdvme cmdvme.c)
 target_include_directories(cmdvme PRIVATE ${PROJECT_SOURCE_DIR}/include)
-target_link_libraries(cmdvme cribvme -lCAENVME)
+target_link_libraries(cmdvme cribvme)
 
 install(TARGETS cmdvme
     RUNTIME DESTINATION bin
@@ -51,8 +48,7 @@ install(TARGETS cmdvme
 # cribabies
 add_executable(cribabies cribabies.c)
 target_include_directories(cribabies PRIVATE ${PROJECT_SOURCE_DIR}/include)
-#target_include_directories(cribabies PRIVATE ${PROJECT_SOURCE_DIR}/include/module)
-target_link_libraries(cribabies cribvme -lCAENVME)
+target_link_libraries(cribabies cribvme)
 
 install(TARGETS cribabies
     RUNTIME DESTINATION bin
