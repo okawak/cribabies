@@ -1,10 +1,12 @@
 #!/bin/bash
 
-current=$(cd $(dirname $0);pwd)
+current=$(
+  cd "$(dirname "$0")" || exit 1
+  pwd
+)
 
-if [ -f "$current/../modulelist.yml" ] ;then
-  source $current/../.venv/bin/activate
-  python3 $current/../init_module/main.py $current/../init_module/modulelist.yml
+if [ -f "$current/modulelist.yaml" ]; then
+  poetry run python "$current/init_modules/src/init_modules.py" "$current/modulelist.yaml"
 else
-  echo 'Please confirm "modulelist.yml" is in the current path.'
+  echo 'Please confirm "modulelist.yaml" is in the current path.'
 fi

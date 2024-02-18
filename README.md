@@ -1,39 +1,45 @@
-Babian
-V2718 + A3818
+## configuration
+- V2718 + A3818
 
 
 ## Implemented modules
 - v7XX
-- v1180
+- v1190
 - MADC32
 - SIS3820
 
 
 ## How to use
+## need CAEN library
+From CAEN page, please install these library first
 
-### babies
-Modify 
-```
-src/cribabies.c
-```
+- CAENVMELib
+- A3818-driver
+
+(option)
+- CAENComm
+- CAEN Upgrader
+
+### babies 
+modufy these files:
+- modulelist.yaml
+- src/cribabies.c
 as your experimental setting.
 
-
-### stop.sh
-```
-./stop.sh
-```
-is the shell script to be executed after RUN STOP (not NSSTA).
-
-### build 
-just
-```
+```shell
+mkdir build
+cd build
+cmake ..
 make
+make install
+cd ..
+source thiscribabies.sh 
 ```
 is fine for building.
 
 To execute cribabies, say
-```
-./bin/cribabies $EFN
+```shell
+./init_vme.sh
+cribabies $EFN
 ```
 where EFN is Event Fragment Number, to be shared with babirl.

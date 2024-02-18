@@ -2,7 +2,7 @@
 /* bi-tcp */
 int mktcpsock(unsigned short);
 int mktcpsend(char *, unsigned short);
-int mktcpsend_tout(char*, unsigned short, int);
+int mktcpsend_tout(char *, unsigned short, int);
 int mkudpsock();
 int mkudpsend();
 int mkmultisend();
@@ -10,10 +10,10 @@ int registmultisend();
 int getmyaddress(char *host, char *domain, char *ipaddr);
 
 /* bi-shm */
-void sem_p(); // void sem_p(int semid, struct sembuf *semb)
-void sem_v(); // void sem_v(int semid, struct sembuf *semb)
-int initshm();      // int initshm(int key, int size, char *addr)
-int initsem();      // int initsem(int key, union semun *semunion)
+void sem_p();  // void sem_p(int semid, struct sembuf *semb)
+void sem_v();  // void sem_v(int semid, struct sembuf *semb)
+int initshm(); // int initshm(int key, int size, char *addr)
+int initsem(); // int initsem(int key, union semun *semunion)
 int delshm();
 int delsem();
 
@@ -30,22 +30,22 @@ int init_hcom();
 char *now_time(void);
 
 /* bi-mem */
-//struct stbrstat{
-//  int n;
-//  int max;
-//  unsigned int blkn;
-//  struct stbrbuff *first;
-//  struct stbrbuff *last;
-//};
+// struct stbrstat{
+//   int n;
+//   int max;
+//   unsigned int blkn;
+//   struct stbrbuff *first;
+//   struct stbrbuff *last;
+// };
 //
-//struct stbrbuff{
-//  char *data;
-//  int size;
-//  unsigned int blkn;
-//  struct stbrbuff *next;
-//};
+// struct stbrbuff{
+//   char *data;
+//   int size;
+//   unsigned int blkn;
+//   struct stbrbuff *next;
+// };
 
-struct evtmem *newevt(char *, int, int, unsigned int, int*);
+struct evtmem *newevt(char *, int, int, unsigned int, int *);
 int showevtlist();
 int chkefdata();
 int cleanfirst();
@@ -66,11 +66,10 @@ struct tsmem *updatets(unsigned int, long long int, int);
 int tscleanfirst();
 int tscleanall();
 long long int chkts(unsigned int, int);
-//int addrbuff(struct stbrstat *st, char *data, int sz);
-//int getrbuff(struct stbrstat *st, char *data, int *sz, unsigned int blkn);
+// int addrbuff(struct stbrstat *st, char *data, int sz);
+// int getrbuff(struct stbrstat *st, char *data, int *sz, unsigned int blkn);
 
 int striparg();
-
 
 /* bi-file */
 int isdir(char *path);
@@ -99,13 +98,11 @@ int chkpidof(char *name);
 int killpidof(char *name);
 int dirtoname(char *path, char *name);
 
-
 /* bi-sim */
 double rnd(void);
 int ne(double, double, double);
 void init_nt(void);
 double nt(double p);
-
 
 /* bi-log */
 void initlog(void);

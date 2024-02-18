@@ -8,26 +8,23 @@ extern "C" {
 #endif
 
 /* Custom values */
-#define DEBUG     1    // If define DEBUG, shows debug messages 
+#define DEBUG 1 // If define DEBUG, shows debug messages
 
 // Selection of buffer size, w/o HUGEBUFF, LARGEBUFF => 256kB buffer
-#define HUGEBUFF    1    // 8MB Buffer
-//#define LARGEBUFF    1    // 2MB Buffer
+#define HUGEBUFF 1 // 8MB Buffer
+// #define LARGEBUFF    1    // 2MB Buffer
 
-#define BABIESRC  "./babies.rc"  // parameterfile
-
+#define BABIESRC "../babies.rc" // parameterfile
 
 // Receiver port of babild
-#define ERRCVPORT   17601
-#define ESCOMPORT   17651  // port will be ESCOMPORT + EFN
-
+#define ERRCVPORT 17601
+#define ESCOMPORT 17651 // port will be ESCOMPORT + EFN
 
 // for run status
-#define STAT_RUN_IDLE     0
-#define STAT_RUN_START    1
-#define STAT_RUN_NSSTA    2
+#define STAT_RUN_IDLE 0
+#define STAT_RUN_START 1
+#define STAT_RUN_NSSTA 2
 #define STAT_RUN_WAITSTOP 3
-
 
 typedef void (*babies_func)(void);
 
@@ -36,7 +33,6 @@ void babies_check(void);
 
 // Register program name
 void babies_name(char *name);
-
 
 // Register User start function
 void babies_start(babies_func start);
@@ -73,7 +69,6 @@ int babies_get_evtn(void);
 void babies_init_event(void);
 
 void babies_init_eventts(void);
- 
 
 /** Initialize segment block
  */
@@ -138,7 +133,6 @@ char *babies_pt(void);
 
 /** Copy timestamp value */
 void babies_copyts(unsigned long long int ts);
-
 
 #ifdef __cplusplus
 }

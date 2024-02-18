@@ -8,8 +8,8 @@ int init_caen_v2718(void);
 int init_caen_v1718(void);
 unsigned short vme_read16(unsigned int addr);
 unsigned int vme_read32(unsigned int addr);
-int vme_write16(unsigned int addr,unsigned short sval);
-int vme_write32(unsigned int addr,unsigned int lval);
+int vme_write16(unsigned int addr, unsigned short sval);
+int vme_write32(unsigned int addr, unsigned int lval);
 int vme_amsr(unsigned int lval);
 void release_caen();
 int vread32(unsigned int addr, int *val);
@@ -30,4 +30,3 @@ void vme_setoutput_v2718();
 void vme_v2718_output_pulse(unsigned short mask);
 
 int vme_v2718_chk_output_register(void);
-

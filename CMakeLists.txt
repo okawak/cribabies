@@ -3,7 +3,6 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 endif()
 
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-#set(CMAKE_CXX_STANDARD 17)
 project(cribabies)
 
 # Default installation dir
@@ -16,7 +15,6 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 
 # subdirectory
-# add_subdirectory(init)
 add_subdirectory(src)
 
 
