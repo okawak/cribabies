@@ -47,6 +47,11 @@ source thiscribabies.sh
 ```
 is fine for building.
 
+compiled files are installed here
+- install/bin/cribabies
+- install/bin/cmdvme
+- install/lib/libcribvme.so
+
 To execute cribabies, say
 ```shell
 ./init_vme.sh
