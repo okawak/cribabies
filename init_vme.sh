@@ -6,7 +6,9 @@ current=$(
 )
 
 if [ -f "$current/modulelist.yaml" ]; then
-  poetry run python "$current/init_modules/src/init_modules.py" "$current/modulelist.yaml"
+  cd "$current/init_modules" || exit 1
+  poetry run python "src/init_modules.py" "$current/modulelist.yaml"
+  cd - || exit 1
 else
-  echo 'Please confirm "modulelist.yaml" is in the current path.'
+  echo "Please confirm \"modulelist.yaml\" is in the cribabies directory."
 fi

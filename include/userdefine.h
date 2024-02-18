@@ -1,4 +1,4 @@
 /* include/userdefine.h */
 
-#define BABIRLDIR "/home/daq/babirl"
-#define PIDDIR "/home/daq/run"
+//#define BABIRLDIR "/home/baba/babirl"
+//#define PIDDIR    "/home/baba/babirl/run"

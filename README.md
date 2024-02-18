@@ -10,7 +10,7 @@
 
 
 ## How to use
-## need CAEN library
+### CAEN library
 From CAEN page, please install these library first
 
 - CAENVMELib
@@ -19,6 +19,16 @@ From CAEN page, please install these library first
 (option)
 - CAENComm
 - CAEN Upgrader
+
+### babirl
+From RIBFDAQ page, please install the babirl
+
+If you want, please copy the latest babirl files
+- babirl/include/segidlist.h -> include/segidlist.h (need to add line #define CRIB 12)
+- babirl/include/bi-config.h -> include/bi-config.h (modify PIDDIR -> "run", comment out BABIESRC)
+- babirl/lib/bi-pid.c -> src/bi-pid.c
+- babirl/skelton/libbabies.h -> include/libbabies.h (modify to debug mode)
+- babirl/skelton/libbabies.c -> include/libbabies.c
 
 ### babies 
 modufy these files:

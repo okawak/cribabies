@@ -8,20 +8,21 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "lib/bbpid.h"
-#include "lib/libbabies.h"
-#include "lib/libbbcaenvme.h"
-#include "lib/segidlist.h"
+// #include "libbabies.h"
+#include "libbbcaenvme.h"
+#include "segidlist.h"
 
 #include "modules/madc32.h"
 #include "modules/sis3820.h"
 #include "modules/v1190.h"
 #include "modules/v7XX.h"
 
+#include "bi-pid.c"
+
 int efn = 0;
 int mode = STAT_RUN_IDLE;
 unsigned int scrbuff[32] = {0};
-char pidpath[] = "/home/daq/run/babies";
+char pidpath[] = "./run/babies";
 
 // address of VME board
 const unsigned int scraddr = 0x38000000;

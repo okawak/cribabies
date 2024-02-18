@@ -34,7 +34,7 @@ enum mode { WR,
             NONE };
 typedef struct {
     enum mode md;
-    const char mdchar[];
+    const char *mdchar;
 } stchkmode;
 
 stchkmode chkmode[] = {

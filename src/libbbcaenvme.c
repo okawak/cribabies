@@ -1,13 +1,14 @@
-#include "lib/libbbcaenvme.h"
+#include "libbbcaenvme.h"
 #include <CAENVMElib.h>
 #include <CAENVMEtypes.h>
+#include <stdio.h>
 
 static int BHandle = -1;
 static CVAddressModifier AM = cvA32_U_DATA;
 static unsigned int irqmask;
 
 int init_caen(CVBoardTypes VMEBoard, short Link, short Device) {
-    if (CAENVME_Init(VMEBoard, Link, Device, &BHandle) != cvSuccess) {
+    if (CAENVME_Init2(VMEBoard, &Link, Device, &BHandle) != cvSuccess) {
         printf("\n\n Error opening the device\n");
         return 0;
     }

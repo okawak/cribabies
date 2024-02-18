@@ -1,11 +1,17 @@
 #define MKSEGID(device, focal, detector, module) ((((device << 6 | focal) << 6) | detector) << 8 | module)
 
-// Device   0--63
+// Device or ExpGroup   0--63
 #define BIGRIPS 0
 #define ZeroDegree 1
+#define SAMURAI 2
 #define SHARAQ 11
 #define CRIB 12
 #define DALI 20
+#define GAMMAGR 21
+#define BETAGR 22
+#define RADIIGR 23
+#define SAMURAIGR 24
+#define USERGR 57
 #define DAQ 58 // for special case
 
 // Focal plane  0--63
@@ -21,6 +27,7 @@
 #define F10 10
 #define F11 11
 #define F12 12
+#define F13 13
 /* 20--21, 62 for SHARAQ */
 #define FDAQ 58 // for special case
 #define B3F 63
@@ -33,8 +40,6 @@
 #define S0 20
 #define S1 21
 #define S2 22
-#define S0S 23
-#define S0N 24
 #define SHB3F 62
 
 // Detector  0--63
@@ -59,12 +64,13 @@
 #define ISGET 9
 #define COIN 10
 #define NAIE 11
+#define TOTE 11
 #define PILEUP 12
 #define STOPPLA 13
-#define F7PLAT 14
+#define DUPPLAT 14
 #define PLAQ2 15
 #define NAIT 16
-// 16--17
+#define TOTQ 17
 #define LABRA 18
 #define LABRT 19
 // 20
@@ -81,15 +87,23 @@
 //
 // For SHARAQ
 #define SHBLD 31
-#define SHCRDCAA 32
-#define SHCRDCAT 33
+#define SHCRDC 32
+#define SHCRDCA 33
 #define SHCRDCC 34
-#define DIAMOND 35
-#define SHNWA 40
-#define SHNWT 41
+#define SHCRDCT1 35
+#define SHCRDCT2 36
+#define SHCRDCA2 37
+#define SHCRDCA3 38
 
 // For Must2
-#define MUST2DET 50
+// #define MUST2DET 50
+#define PLAYOBI 50
+
+//// for gamma11
+// #define GAMMAPLAT 52
+
+// For BigRIPS development
+#define PLATC 60
 
 // Module  0--255
 #define C16 0
@@ -123,7 +137,6 @@
 #define V1290 25
 #define V1190C 26
 #define DSP 29
-#define TC842 30
 #define A3100 31
 #define MADC32 32 // Mesytech ADC
 #define LUPOIO 41
@@ -131,13 +144,14 @@
 #define LUPOMTS 43 // for dead time monitor
 #define MUST2VXI 50
 #define MDAQ 58 // for special case
-#define SIS3301 8
+#define UNDEFINE8 8
 #define UNDEFINE15 15
 #define UNDEFINE18 18
 #define UNDEFINE19 19
 #define UNDEFINE20 20
 #define UNDEFINE27 27
 #define UNDEFINE28 28
+#define UNDEFINE30 30
 #define UNDEFINE33 33
 #define UNDEFINE34 34
 #define UNDEFINE35 35
@@ -158,6 +172,5 @@
 #define F11GESCALER 35
 #define F3DAQSCALER 36
 #define GGDAQ01SCALER 41
-#define GGDAQ03SCALER 47
 //
 #define SHSSMSCALER 100
