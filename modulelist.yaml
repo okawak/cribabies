@@ -1,0 +1,109 @@
+ - name: ADC1
+   type: v785
+   haddr: 0x10000000
+   geometry: 1
+   in use: yes
+   config:
+   ## thresholds must be [] (all 0) or specific 32-element list
+      thresholds: []
+
+
+ - name: ADC2
+   type: v785
+   haddr: 0x10010000
+   geometry: 2
+   in use: yes
+   config: 
+      thresholds: []
+
+ 
+ - name: ADC3
+   type: v785
+   haddr: 0x10020000
+   geometry: 3
+   in use: yes
+   config: 
+      thresholds: []
+
+ - name: MADC1
+   type: madc32
+   haddr: 0x50000000
+   module_id: 6
+   in use: yes
+   config: 
+      thresholds: []
+      resolution: 1
+      input_range: 2
+
+# resolution 0->800ns(2K), 1->1.6us, 2->3.2us, 3->6.4us(8K), 4->12.5us (8K) conv. time
+# input_range 0->4V, 1->10V, 2->8V
+
+ - name: MADC2
+   type: madc32
+   haddr: 0x50010000
+   module_id: 7
+   in use: no
+   config: 
+      thresholds: []
+      resolution: 1
+      input_range: 2
+
+
+ 
+ - name: TDC1
+   type: v775
+   haddr: 0x20000000
+   geometry: 11
+   in use: yes
+   config: 
+      #FSR: 30
+      FSR: 66
+      thresholds: []
+
+#====== v775 FSR (Full Scale Range)
+# LSB is given by 8.9/N (ns)
+# then, FSR is
+# FSR = LSB x 4096
+# 30 < N < 255
+# 0.14 us < FSR < 1.21 us
+
+ - name: TDC2
+   type: v775
+   haddr: 0x20010000
+   geometry: 12
+   in use: yes
+   config: 
+      FSR: 66
+      thresholds: []
+
+ - name: TDC3
+   type: v775
+   haddr: 0x20020000
+   geometry: 13
+   in use: no
+   config: 
+      FSR: 66
+      thresholds: []
+
+ - name: MHTDC
+   type: v1190
+   haddr: 0x40000000
+   geometry: 16
+   control_register: 0x129
+   in use: yes
+   config: 
+      thresholds: []
+
+#Control register default(0x020)+EVENT FIFO ENABLE(0x100)+EMPTY EVENT(0x008)+BERR EN(0x001)
+#0x129
+
+ - name: QDC1
+   type: v792
+   haddr: 0x30000000
+   geometry: 21
+   in use: no
+   config: 
+      thresholds: []
+
+
+
