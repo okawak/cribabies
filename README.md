@@ -140,6 +140,11 @@ compiled files are installed here
 
 To execute cribabies, say
 ```shell
+# initial python setting
+cd init_modules
+poetry install
+cd ..
+
 ./init_vme.sh
 cribabies $EFN
 ```
