@@ -1,6 +1,6 @@
 /* last modified : 10/12/16 15:24:38 
  *
- * babirl/lib/bi-pid.c
+ * bbpid.c
  * library for process management
  * 
  */
@@ -13,14 +13,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <bi-config.h>
-
-#ifdef DEBUG
-#define DB(x) x
-#else
-#define DB(x)
-#endif
-
 /** MakePID file into PID Directory
  *  @param name Process name
  *  @return PID, (0 = Fail)
@@ -31,7 +23,7 @@ int mkpid(char *name){
   int pid;
   FILE *fd;
 
-  snprintf(path,  sizeof(path), "%s/%s", PIDDIR, name);
+  snprintf(path,  sizeof(path), "%s", name);
 
   if(!stat(path, &st)){
     printf("bi-pid: PID file is exist %s\n", path);
@@ -59,7 +51,7 @@ int mkpid(char *name){
 int rmpid(char *name){
   char path[80];
 
-  snprintf(path,  sizeof(path), "%s/%s", PIDDIR, name);
+  snprintf(path,  sizeof(path), "%s", name);
   if(unlink(path)){
     return 0;
   }
@@ -77,7 +69,7 @@ int chkpid(char *name){
   int pid;
   FILE *fd;
 
-  snprintf(path,  sizeof(path), "%s/%s", PIDDIR, name);
+  snprintf(path,  sizeof(path), "%s", name);
   if((fd = fopen(path, "r")) == NULL){
     return 0;
   }
@@ -100,7 +92,7 @@ int killpid(char *name){
     return 0;
   }
   if(kill(pid, SIGINT)){
-    perror("bi-pid: Can't kill.\n");
+    perror("bbpid: Can't kill.\n");
     return 0;
   }
 
@@ -146,7 +138,6 @@ int killpidof(char *name){
   int pids[32], n, i;
   
   n = pidof(name, pids);
-  DB(printf("killpidof = %d (%s)\n", n, name));
   if(!n) return 0;
 
   for(i=0;i<n;i++){
@@ -164,7 +155,6 @@ int chkpidof(char *name){
   int n, pids[32];
   n = pidof(name, pids);
 
-  DB(printf("chkpidof = %d, %s\n", n, name));
   return n;
 }
 
@@ -173,7 +163,7 @@ int dirtoname(char *path, char *name){
   char tpath[256], *tp;
   
   if(!path) return 0;
-  strncpy(tpath, path, sizeof(tpath)-1);
+  strncpy(tpath, path, sizeof(tpath));
 
   for(tp = strtok(tpath, "/"); tp; tp=strtok(NULL, "/")){
     strcpy(name, tp);

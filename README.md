@@ -1,6 +1,7 @@
 ## configuration
 - V2718 + A3818
 
+developed by H.Shimiz, updated by K.Okawa
 
 ## Implemented modules
 - v7XX
@@ -20,18 +21,95 @@ From CAEN page, please install these library first
 - CAENComm
 - CAEN Upgrader
 
-### babirl
-From RIBFDAQ page, please install the babirl
+### bbcaenvme and modification
+It use "bbcaenvme150709" files, and they can download from RIBFDAQ download page.
 
-If you want, please copy the latest babirl files
-- babirl/include/segidlist.h -> include/segidlist.h (need to add line #define CRIB 12)
-- babirl/include/bi-config.h -> include/bi-config.h (modify PIDDIR -> "run", comment out BABIESRC)
-- babirl/lib/bi-pid.c -> src/bi-pid.c
-- babirl/skelton/libbabies.h -> include/libbabies.h (modify to debug mode)
-- babirl/skelton/libbabies.c -> include/libbabies.c
+- bbcaenvme/babies/segidlist.h -> include/segidlist.h (need to add line #define CRIB 12)
+- bbcaenvme/babies/bbpid.h -> include/bbpid.h
+- bbcaenvme/babies/bbpid.c -> src/bbpid.c
+
+- bbcaenvme/cmdvme/cmdvme.c -> src/cmdvme.c
+
+in the struct definition
+```cpp
+  // Feb.2024 K.Okawa modified
+  //const char mdchar[];
+  const char *mdchar;
+```
+
+- bbcaenvme/babies/libbabies.h (NOT in module directory) -> include/libbabies.h (modify to debug mode)
+- bbcaenvme/babies/libbabies.c -> src/libbabies.c
+
+- bbcaenvme/lib/libbbcaenvme.h -> include/libbbcaenvme.h
+
+add the last line
+```cpp
+/* shimizu Dec.2019 */
+void vme_setoutput_v2718();
+void vme_v2718_output_pulse(unsigned short mask);
+
+int vme_v2718_chk_output_register(void);
+```
+
+- bbcaenvme/lib/libbbcaenvme.c -> src/libbbcaenvme.c
+```cpp
+// Feb.2024 K.Okawa add <stdio.h>
+#include <stdio.h>
+
+// -- snip --
+
+  // Feb.2024 K.Okawa mod: CAENVME_Init -> CAENVME_Init2
+  //if( CAENVME_Init(VMEBoard, Link, Device, &BHandle) != cvSuccess ) {
+  if( CAENVME_Init2(VMEBoard, &Link, Device, &BHandle) != cvSuccess ) {
+
+// -- snip --
+
+/* shimizu Dec.2019 */
+void vme_setoutput_v2718(){
+
+  unsigned short val;
+  unsigned int width;
+  unsigned int period;
+
+  // assignment 
+  // ch0: BUSY CLR
+  // ch1: START
+  // ch2: STOP
+  // ch3: Clock (Pulser B)
+  // ch4: SCL CLR
+  CAENVME_SetOutputConf(BHandle,cvOutput0,cvDirect,cvActiveHigh,cvManualSW);
+  CAENVME_SetOutputConf(BHandle,cvOutput1,cvDirect,cvActiveHigh,cvManualSW);
+  CAENVME_SetOutputConf(BHandle,cvOutput2,cvDirect,cvActiveHigh,cvManualSW);
+  CAENVME_SetOutputConf(BHandle,cvOutput3,cvDirect,cvActiveHigh,cvMiscSignals);
+  CAENVME_SetOutputConf(BHandle,cvOutput4,cvDirect,cvActiveHigh,cvManualSW);
+  // set ch3 for clock generator
+  width=4;// 100ns width
+  period=40;// 0.1us period -> 10MHz
+  CAENVME_SetPulserConf(BHandle,cvPulserB,period,width,cvUnit25ns, 0,cvManualSW,cvManualSW); 
+  val = 0x0004;
+  CAENVME_WriteRegister(BHandle,cvOutRegSet,val);// PulserB start 
+
+}
+
+void vme_v2718_output_pulse(unsigned short mask) {
+  
+  //printf("CAENVME_PulseOutputRegister: %d\n",CAENVME_PulseOutputRegister(BHandle,mask));
+  CAENVME_PulseOutputRegister(BHandle,mask);
+
+}
+
+int vme_v2718_chk_output_register(void) {
+
+  unsigned int data;
+  CAENVME_ReadRegister(BHandle,cvOutRegSet,&data);
+  //printf("CAENVME_ReadRegister: %04x\n",data);
+  return (data == 0x0000);
+
+}
+```
 
 ### babies 
-modufy these files:
+modify these files:
 - modulelist.yaml
 - src/cribabies.c
 

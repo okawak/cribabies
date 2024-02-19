@@ -44,7 +44,6 @@
 #define ES_RUN_STOP      5
 #define ES_RELOAD_DRV    6
 #define ES_GET_EVTN      8    // Get last event number
-#define ES_GET_RUNSTAT   9    // Get Run status
 #define ES_CON_EFR      11    // Connect EFS to EFR
 #define ES_DIS_EFR      12    // Disconnect EFS to EFR
 #define ES_QUIT         99
@@ -152,9 +151,6 @@ static int pfd[2] = {0}, fseg = 0, fevt = 0, fscr = 0;
 static pthread_mutex_t dbuffmutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t waitmutex = PTHREAD_MUTEX_INITIALIZER;
 
-#define RUNSTFILE "/tmp/babiesrun"
-#define RUNBKFILE "/tmp/babiesblk"
-
 /* prototype */
 int mktcpsock(unsigned short port);
 int mktcpsend(char *host, unsigned short port);
@@ -163,25 +159,6 @@ int efr_disconnect(void);
 int read_efrc(void);
 int update_efrc(void);
 void babie_init_block(void);
-
-
-int creat_runstfile(void){
-  return creat(RUNSTFILE, 0666);
-}
-
-int unlink_runstfile(void){
-  return unlink(RUNSTFILE);
-}
-
-int isbkfile(void){
-  if(!access(RUNBKFILE, F_OK)){
-    printf("File ex\n");
-    return 1;
-  }
-    printf("File non\n");
-
-  return 0;
-}
 
 
 void babies_flush(void){
@@ -210,7 +187,6 @@ void babies_flush(void){
   pthread_mutex_unlock(&dbuffmutex);
   while(d > 1){
     DB(printf("libbabies: **** double buffer full ****\n"));
-    printf("libbabies: **** double buffer full ****\n");
     DB(sleep(1));
     pthread_mutex_lock(&dbuffmutex);
     d = dbuff;
@@ -283,7 +259,7 @@ void babies_check(void){
 }
 
 void babies_name(char *tname){
-  strncpy(name, tname, sizeof(name)-1);
+  strncpy(name, tname, sizeof(name));
 }
 
 void babies_evtloop(babies_func tevtloop){
@@ -476,7 +452,6 @@ int commain(void){
     sflag = STAT_RUN_START;
     pthread_mutex_unlock(&waitmutex);
 
-    creat_runstfile();
 
     break;
   case ES_RUN_NSSTA:
@@ -508,8 +483,6 @@ int commain(void){
     sflag = STAT_RUN_NSSTA;
     pthread_mutex_unlock(&waitmutex);
 
-    creat_runstfile();
-
     break;
   case ES_RUN_STOP:
     DB(printf("libbabies: ES_RUN_STOP\n"));
@@ -519,23 +492,11 @@ int commain(void){
     send(sock, (char *)&len, sizeof(len), 0);
     send(sock, (char *)&ret, len, 0);
     sflag = STAT_RUN_WAITSTOP;
-
-    unlink_runstfile();
     
     break;
   case ES_GET_EVTN:
     // return the event number
     ret = evtn;
-    len = sizeof(ret);
-    send(sock, (char *)&len, sizeof(len), 0);
-    send(sock, (char *)&ret, len, 0);
-    break;
-  case ES_GET_RUNSTAT:
-    if(isbkfile()){
-      ret = -1;
-    }else{
-      ret = sflag;
-    }
     len = sizeof(ret);
     send(sock, (char *)&len, sizeof(len), 0);
     send(sock, (char *)&ret, len, 0);

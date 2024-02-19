@@ -2,23 +2,12 @@
 set(SOURCES
     libbbcaenvme.c
     libbabies.c
-    bi-pid.c
+    bbpid.c
     # modules
     modules/v7XX.c
     modules/v1190.c
     modules/madc32.c
     modules/sis3820.c
-)
-
-# header files
-set(HEADERS
-    ${PROJECT_SOURCE_DIR}/include/libbbcaenvme.h
-    ${PROJECT_SOURCE_DIR}/include/libbabies.h
-    # modules
-    ${PROJECT_SOURCE_DIR}/include/modules/v7XX.h
-    ${PROJECT_SOURCE_DIR}/include/modules/v1190.h
-    ${PROJECT_SOURCE_DIR}/include/modules/madc32.h
-    ${PROJECT_SOURCE_DIR}/include/modules/sis3820.h
 )
 
 # library

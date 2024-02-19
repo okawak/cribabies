@@ -8,7 +8,8 @@
 #include <string.h>
 #include <unistd.h>
 
-// #include "libbabies.h"
+#include "bbpid.h"
+#include "libbabies.h"
 #include "libbbcaenvme.h"
 #include "segidlist.h"
 
@@ -16,8 +17,6 @@
 #include "modules/sis3820.h"
 #include "modules/v1190.h"
 #include "modules/v7XX.h"
-
-#include "bi-pid.c"
 
 int efn = 0;
 int mode = STAT_RUN_IDLE;
