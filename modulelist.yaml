@@ -2,7 +2,7 @@
    type: v785
    haddr: 0x10000000
    geometry: 1
-   in use: yes
+   in use: no
    config:
    ## thresholds must be [] (all 0) or specific 32-element list
       thresholds: []
@@ -12,7 +12,7 @@
    type: v785
    haddr: 0x10010000
    geometry: 2
-   in use: yes
+   in use: no
    config: 
       thresholds: []
 
@@ -21,7 +21,7 @@
    type: v785
    haddr: 0x10020000
    geometry: 3
-   in use: yes
+   in use: no
    config: 
       thresholds: []
 
@@ -29,7 +29,7 @@
    type: madc32
    haddr: 0x50000000
    module_id: 6
-   in use: yes
+   in use: no
    config: 
       thresholds: []
       resolution: 1
@@ -71,7 +71,7 @@
    type: v775
    haddr: 0x20010000
    geometry: 12
-   in use: yes
+   in use: no
    config: 
       FSR: 66
       thresholds: []
@@ -90,7 +90,7 @@
    haddr: 0x40000000
    geometry: 16
    control_register: 0x129
-   in use: yes
+   in use: no
    config: 
       thresholds: []
 

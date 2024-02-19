@@ -1,7 +1,7 @@
 ## configuration
 - V2718 + A3818
 
-developed by H.Shimiz, updated by K.Okawa
+developed by H. Shimizu, updated by K. Okawa
 
 ## Implemented modules
 - v7XX
@@ -109,11 +109,18 @@ int vme_v2718_chk_output_register(void) {
 ```
 
 ### babies 
-modify these files:
+modify these files as your experimental setting
 - modulelist.yaml
+
+    set the physical address dial of each module to consist with "haddr" in this file.
+
 - src/cribabies.c
 
-as your experimental setting.
+    1. uncomment unused modules or comment out used modules in "start" function
+    2. If you don't use MADC, comment out the related function in "stop" function
+    3. uncomment or comment out the related function in "clear" depend on the setting
+    4. uncomment or comment out the related function in "evtloop" that make event segment
+    5. If you don't use scaler, comment out the sca() in "evtloop"
 
 ```shell
 mkdir build

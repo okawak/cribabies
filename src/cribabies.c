@@ -53,7 +53,7 @@ void quit(void) {
 
 void start(void) {
 
-    /*
+    /* NO NEED
     // Initialization for V1290 is in ../init/v1290.sh
     v1290_clear(tdcaddr);
     v7XX_clear(qdcaddr);
@@ -64,49 +64,70 @@ void start(void) {
 
     printf("debuginfo: start() clearing modules.\n");
 
+    /*
+    // V785 geo=1 (ADC1) setting
     v7XX_clear(adc0addr);
     //  v7XX_noberr(adc0addr);
     v7XX_multievtberr(adc0addr);
     v7XX_intlevel(adc0addr, intlevel);
     v7XX_mcstctrl(adc0addr, 2);
     v7XX_mcstaddr(adc0addr, 0xab);
+    */
 
+    /*
+    // V785 geo=2 (ADC2) setting
     v7XX_clear(adc1addr);
     // v7XX_noberr(adc1addr);
     v7XX_multievtberr(adc1addr);
+    // v7XX_intlevel(adc1addr, intlevel);
     v7XX_mcstctrl(adc1addr, 1);
     v7XX_mcstaddr(adc1addr, 0xab);
-    // v7XX_intlevel(adc1addr, intlevel);
+    */
 
+    /*
+    // V785 geo=3 (ADC3) setting
+    */
+
+    // V775 geo=11 (TDC1) setting
     v7XX_clear(tdc0addr);
     // v7XX_noberr(tdc0addr);
     v7XX_multievtberr(tdc0addr);
+    // v7XX_intlevel(tdc0addr, intlevel);
     v7XX_mcstctrl(tdc0addr, 2);
     v7XX_mcstaddr(tdc0addr, 0xac);
     // v7XX_singleevtberr(tdc0addr);
-    // v7XX_intlevel(tdc0addr, intlevel);
 
-    // v7XX_clear(tdc1addr);
-    ////  v7XX_noberr(tdc1addr);
-    // v7XX_multievtberr(tdc1addr);
-    // v7XX_mcstctrl(tdc1addr, 1);
-    // v7XX_mcstaddr(tdc1addr, 0xac);
-    ////v7XX_intlevel(tdc0addr, intlevel);
-    //
+    /*
+    //V775 geo=12 (TDC2) setting
+    v7XX_clear(tdc1addr);
+    // v7XX_noberr(tdc1addr);
+    v7XX_multievtberr(tdc1addr);
+    // v7XX_intlevel(tdc0addr, intlevel);
+    v7XX_mcstctrl(tdc1addr, 1);
+    v7XX_mcstaddr(tdc1addr, 0xac);
+    */
+
+    /*
+    // MADC geo=6 (MADC1) setting
     madc32_stop_acq(madc1addr);
     madc32_FIFO_reset(madc1addr); // HY added, but no effect?
     madc32_clear(madc1addr);
     madc32_start_acq(madc1addr);
+    */
 
+    /*
+    // MADC geo 7 (MADC2) setting
     madc32_stop_acq(madc2addr);
     madc32_FIFO_reset(madc2addr); // HY added, but no effect?
     madc32_clear(madc2addr);
     madc32_start_acq(madc2addr);
+    */
 
+    // initialize V1190
     v1190_clear(mhtdcaddr);
 
-    ///* -- initialize scaler -- */
-    sis3820_initialize_nc(scraddr);
+    // initialize scaler
+    // sis3820_initialize_nc(scraddr);
 
     // printf("debuginfo: start() define intlevel.\n");
     vme_define_intlevel(intlevel);
@@ -126,8 +147,8 @@ void start(void) {
 void stop(void) {
     vme_v2718_output_pulse(output2);
 
-    madc32_stop_acq(madc1addr);
-    madc32_stop_acq(madc2addr);
+    // madc32_stop_acq(madc1addr);
+    // madc32_stop_acq(madc2addr);
     clear();
 
     printf("debuginfo: stop() disable interrupt.\n");
@@ -140,7 +161,7 @@ void reload(void) {
 }
 
 void sca(void) {
-    //  int i;
+    // int i;
     // printf("debuginfo: sca() called.\n");
     // printf("Sca\n");
 
@@ -158,14 +179,16 @@ void clear(void) {
     // printf("Clear\n");
 
     vme_v2718_output_pulse(output4); // clear of V785, V775 by ECL connectors
-    v7XX_clear(adc0addr);
-    v7XX_clear(adc1addr);
-    v7XX_clear(tdc0addr);
-    v7XX_clear(tdc1addr);
 
-    madc32_clear(madc1addr);
-    madc32_clear(madc2addr);
-    v1190_clear(mhtdcaddr);
+    // NO NEED?
+    // v7XX_clear(adc0addr);
+    // v7XX_clear(adc1addr);
+    v7XX_clear(tdc0addr);
+    // v7XX_clear(tdc1addr);
+
+    // madc32_clear(madc1addr);
+    // madc32_clear(madc2addr);
+    // v1190_clear(mhtdcaddr);
 
     vme_v2718_output_pulse(output0); // latch reset output0 eob pulse width ~5us
 }
@@ -223,12 +246,14 @@ void evtloop(void) {
 
             // printf("debuginfo:\x1b[32m evtloop() reading data from v785.\x1b[39m\n");
             //  Read data from v785
+            /*
             babies_init_segment(MKSEGID(CRIB, 0, SSDE, V785));
             // v785_segdata(adc1addr);
             // v7XX_dmasegdata(adc0addr, 34);
             // v7XX_dmasegdata(adc1addr, 34);
             v7XX_dmasegdata(0xab000000, 256);
             babies_end_segment();
+            */
 
             // Read data from v775
             babies_init_segment(MKSEGID(CRIB, 0, SSDT, V775));
@@ -238,14 +263,16 @@ void evtloop(void) {
             babies_end_segment();
 
             // Read data from madc
+            /*
             babies_init_segment(MKSEGID(CRIB, 0, SSDE, MADC32));
             madc32_dmasegdata(madc1addr, 34);
             madc32_dmasegdata(madc2addr, 34);
-
-            //      madc32_segdata(madc1addr);
+            // madc32_segdata(madc1addr);
             babies_end_segment();
+            */
 
             // Read data from v1190
+            /*
             babies_init_segment(MKSEGID(CRIB, 0, SSDT, V1190));
             // HY Oct 27,2021
             // Tried to count the number of words by Event FIFO, but always 0
@@ -255,8 +282,8 @@ void evtloop(void) {
 
             v1190_dmasegdata(mhtdcaddr, 256);
             // v1190_segdata(mhtdcaddr);
-
             babies_end_segment();
+            */
 
             // End of event
             babies_end_event();
@@ -285,7 +312,7 @@ void evtloop(void) {
             break;
         case STAT_RUN_WAITSTOP:
             // for the last sequense of run
-            sca();
+            // sca();
             babies_flush();
             babies_last_block();
             break;
