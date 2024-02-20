@@ -8,9 +8,10 @@ static int BHandle = -1;
 static CVAddressModifier AM = cvA32_U_DATA;
 static unsigned int irqmask;
 
-int init_caen(CVBoardTypes VMEBoard, short Link, short Device){
-  // Feb.2024 K.Okawa mod: CAENVME_Init -> CAENVME_Init2
+// Feb.2024 K.Okawa mod: CAENVME_Init -> CAENVME_Init2
+//int init_caen(CVBoardTypes VMEBoard, short Link, short Device){
   //if( CAENVME_Init(VMEBoard, Link, Device, &BHandle) != cvSuccess ) {
+int init_caen(CVBoardTypes VMEBoard, uint32_t Link, short Device){
   if( CAENVME_Init2(VMEBoard, &Link, Device, &BHandle) != cvSuccess ) {
     printf("\n\n Error opening the device\n");
     return 0;

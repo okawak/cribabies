@@ -504,7 +504,8 @@ int commain(void){
   case WHOAREYOU:
     DB(printf("libbabies : WHOAREYOU\n"));
     memset(f, 0, sizeof(f));
-    len = sprintf(f, name);
+    //len = sprintf(f, name);
+    len = sprintf(f, "%s", name); // K.Okawa Feb.2024
     send(sock, (char *)&len, sizeof(len), 0);
     send(sock, f, len, 0);
     break;
