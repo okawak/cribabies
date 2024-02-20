@@ -40,10 +40,28 @@ in the struct definition
 - bbcaenvme/babies/libbabies.h (NOT in module directory) -> include/libbabies.h (modify to debug mode)
 - bbcaenvme/babies/libbabies.c -> src/libbabies.c
 
+in "commain" function
+```cpp
+    //len = sprintf(f, name);
+    len = sprintf(f, "%s", name); // K.Okawa Feb.2024
+```
+
 - bbcaenvme/lib/libbbcaenvme.h -> include/libbbcaenvme.h
 
-add the last line
+
 ```cpp
+#ifndef LIBBBCAENVME_H
+#define LIBBBCAENVME_H
+#include <CAENVMEtypes.h>
+#include <stdint.h> // K.Okawa Feb.2024
+#endif
+
+//int init_caen(CVBoardTypes VMEBoard, short Link, short Device);
+int init_caen(CVBoardTypes VMEBoard, uint32_t Link, short Device); // K.Okawa Feb.2024
+
+// -- snip --
+
+// add last line
 /* shimizu Dec.2019 */
 void vme_setoutput_v2718();
 void vme_v2718_output_pulse(unsigned short mask);
@@ -58,8 +76,10 @@ int vme_v2718_chk_output_register(void);
 
 // -- snip --
 
-  // Feb.2024 K.Okawa mod: CAENVME_Init -> CAENVME_Init2
+// Feb.2024 K.Okawa mod: CAENVME_Init -> CAENVME_Init2
+//int init_caen(CVBoardTypes VMEBoard, short Link, short Device){
   //if( CAENVME_Init(VMEBoard, Link, Device, &BHandle) != cvSuccess ) {
+int init_caen(CVBoardTypes VMEBoard, uint32_t Link, short Device){
   if( CAENVME_Init2(VMEBoard, &Link, Device, &BHandle) != cvSuccess ) {
 
 // -- snip --

@@ -1,9 +1,11 @@
 #ifndef LIBBBCAENVME_H
 #define LIBBBCAENVME_H
 #include <CAENVMEtypes.h>
+#include <stdint.h> // K.Okawa Feb.2024
 #endif
 
-int init_caen(CVBoardTypes VMEBoard, short Link, short Device);
+//int init_caen(CVBoardTypes VMEBoard, short Link, short Device);
+int init_caen(CVBoardTypes VMEBoard, uint32_t Link, short Device); // K.Okawa Feb.2024
 int init_caen_v2718(void);
 int init_caen_v1718(void);
 unsigned short vme_read16(unsigned int addr);
